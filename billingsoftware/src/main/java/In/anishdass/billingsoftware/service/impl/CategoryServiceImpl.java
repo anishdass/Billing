@@ -30,6 +30,12 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.findAll().stream().map(categoryEntity -> convertToResponse(categoryEntity)).collect(Collectors.toList());
     }
 
+    @Override
+    public void delete(String categoryId) {
+        CategoryEntity existingCategory = categoryRepository.findByCategoryId(categoryId).orElseThrow(() -> new RuntimeException("Category not found" + categoryId));
+        categoryRepository.delete(existingCategory);
+    }
+
     private CategoryResponse convertToResponse(CategoryEntity newCategory) {
         return CategoryResponse.builder().categoryId(newCategory.getCategoryId()).name(newCategory.getName()).description(newCategory.getDescription()).bgColor(newCategory.getBgColor()).imgUrl(newCategory.getImgUrl()).createdAt(newCategory.getCreatedAt()).updatedAt(newCategory.getUpdatedAt()).build();
     }
