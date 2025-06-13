@@ -25,8 +25,8 @@ public class CategoryServiceImpl implements CategoryService {
     public CategoryResponse add(CategoryRequest request, MultipartFile file) {
         String imgUrl = fileUploadService.uploadFile(file);
         CategoryEntity newCategory = convertToEntity(request);
-        newCategory = categoryRepository.save(newCategory);
         newCategory.setImgUrl(imgUrl);
+        newCategory = categoryRepository.save(newCategory);
         return convertToResponse(newCategory);
     }
 
