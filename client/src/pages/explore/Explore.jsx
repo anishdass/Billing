@@ -1,7 +1,11 @@
-import React from "react";
 import "./Explore.css";
+import React, { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 
 const Explore = () => {
+  const { categories } = useContext(AppContext);
+  console.log(categories);
+
   return (
     <div className='explore-container text-light'>
       <div className='left-column'>
@@ -15,7 +19,7 @@ const Explore = () => {
       </div>
       <div className='right-column d-flex flex-column'>
         <div className='customer-form-container' style={{ height: "15%" }}>
-          Customer Form 
+          Customer Form
         </div>
         <hr className='my-3 text-light' />
         <div
