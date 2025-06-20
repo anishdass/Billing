@@ -71,7 +71,7 @@ public class ItemSericeImpl implements ItemService {
 
     @Override
     public void deleteItem(String itemId) {
-        ItemEntity existingItem = itemRepository.findbyItemId(itemId)
+        ItemEntity existingItem = itemRepository.findByItemId(itemId)
                 .orElseThrow(() -> new RuntimeException("Item not found" + itemId));
         boolean isFileDeleted = fileUploadService.deleteFile(existingItem.getImgUrl());
         if (isFileDeleted) {

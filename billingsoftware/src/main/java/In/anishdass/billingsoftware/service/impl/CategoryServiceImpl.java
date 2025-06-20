@@ -4,6 +4,7 @@ import In.anishdass.billingsoftware.entity.CategoryEntity;
 import In.anishdass.billingsoftware.io.CategoryRequest;
 import In.anishdass.billingsoftware.io.CategoryResponse;
 import In.anishdass.billingsoftware.repository.CategoryRepository;
+import In.anishdass.billingsoftware.repository.ItemRepository;
 import In.anishdass.billingsoftware.service.CategoryService;
 import In.anishdass.billingsoftware.service.FileUploadService;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     private final CategoryRepository categoryRepository;
     private final FileUploadService fileUploadService;
+    private final ItemRepository itemRepository;
 
     @Override
     public CategoryResponse add(CategoryRequest request, MultipartFile file) {
@@ -44,7 +46,17 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     private CategoryResponse convertToResponse(CategoryEntity newCategory) {
-        return CategoryResponse.builder().categoryId(newCategory.getCategoryId()).name(newCategory.getName()).description(newCategory.getDescription()).bgColor(newCategory.getBgColor()).imgUrl(newCategory.getImgUrl()).createdAt(newCategory.getCreatedAt()).updatedAt(newCategory.getUpdatedAt()).build();
+        Integer itemsCount = itemRepository.countByCategoryId(newCategory.getId());
+        return CategoryResponse.builder()
+                .categoryId(newCategory.getCategoryId())
+                .name(newCategory.getName())
+                .description(newCategory.getDescription())
+                .bgColor(newCategory.getBgColor())
+                .imgUrl(newCategory.getImgUrl())
+                .createdAt(newCategory.getCreatedAt())
+                .updatedAt(newCategory.getUpdatedAt())
+                .items(itemsCount)
+                .build();
     }
 
     private CategoryEntity convertToEntity(CategoryRequest request) {

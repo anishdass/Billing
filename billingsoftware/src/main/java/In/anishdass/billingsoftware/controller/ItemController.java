@@ -38,7 +38,7 @@ public class ItemController {
     }
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    @DeleteMapping("/admin/items/itemId")
+    @DeleteMapping("/admin/items/{itemId}")
     public void removeItem(@PathVariable String itemId) {
         try {
             itemService.deleteItem(itemId);
