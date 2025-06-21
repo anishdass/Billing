@@ -1,12 +1,47 @@
 import React from "react";
+import { useState } from "react";
+import { addUser } from "../../service/UserService";
+import toast from "react-hot-toast";
 
-const UserForm = () => {
+const UserForm = ({ setUsers }) => {
+  const [loading, setLoading] = useState(false);
+
+  const [data, setData] = useState({
+    name: "",
+    email: "",
+    password: "",
+    role: "ROLE_USER",
+  });
+
+  const onChangeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setData((data) => ({ ...data, [name]: value }));
+  };
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await addUser(data);
+      console.log(res);
+      // setUsers((prevUsers) => [...prevUsers, res.data]);
+      // toast.success("User Added");
+      // setData({ name: "", email: "", password: "", role: "ROLE_USER" });
+    } catch (e) {
+      toast.error("Error Adding user");
+      console.error(e.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className='mx-2 mt-2'>
       <div className='row'>
         <div className='card col-md-8 form-container'>
           <div className='card-body'>
-            <form>
+            <form onSubmit={onSubmitHandler}>
               <div className='mb-3'>
                 <label htmlFor='name' className='form-label'>
                   Name
@@ -17,6 +52,8 @@ const UserForm = () => {
                   id='name'
                   className='form-control'
                   placeholder='John Doe'
+                  value={data.name}
+                  onChange={onChangeHandler}
                 />
               </div>
 
@@ -31,6 +68,8 @@ const UserForm = () => {
                   id='email'
                   className='form-control'
                   placeholder='yourname@example.com'
+                  value={data.email}
+                  onChange={onChangeHandler}
                 />
               </div>
               <div className='mb-3'>
@@ -44,10 +83,15 @@ const UserForm = () => {
                   id='password'
                   className='form-control'
                   placeholder='****'
+                  value={data.password}
+                  onChange={onChangeHandler}
                 />
               </div>
-              <button type='submit' className='btn btn-warning w-100'>
-                Save
+              <button
+                type='submit'
+                className='btn btn-warning w-100'
+                disabled={loading}>
+                {loading ? "Loading..." : "Save"}
               </button>
             </form>
           </div>

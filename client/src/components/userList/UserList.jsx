@@ -1,6 +1,6 @@
 import React from "react";
 
-const UserList = () => {
+const UserList = ({ users, setUsers }) => {
   return <div>UserList</div>;
 };
 
