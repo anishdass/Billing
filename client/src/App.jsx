@@ -1,6 +1,6 @@
 import React from "react";
 import Menubar from "./components/Menubar/Menubar";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useLocation } from "react-router-dom";
 import Dashboard from "./pages/dashboard/Dashboard";
 import ManageCategory from "./pages/manageCategory/ManageCategories";
 import ManageUsers from "./pages/manageUsers/ManageUsers";
@@ -10,9 +10,10 @@ import { Toaster } from "react-hot-toast";
 import Login from "./pages/login/Login";
 
 const App = () => {
+  const location = useLocation();
   return (
     <div>
-      <Menubar />
+      {location.pathname !== "/login" ? <Menubar /> : ""}
       <Toaster />
       <Routes>
         <Route path='/dashboard' element={<Dashboard />} />

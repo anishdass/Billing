@@ -1,7 +1,46 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import "./Login.css";
+import toast from "react-hot-toast";
+import login from "../../service/AuthService";
+import { useNavigate } from "react-router-dom";
+import { AppContext } from "../../context/AppContext";
 
 const Login = () => {
+  const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+  const { setAuthData } = useContext(AppContext);
+  const [data, setData] = useState({
+    name: "",
+    password: "",
+  });
+
+  const onChangeHandler = (e) => {
+    const name = e.target.name;
+    const value = e.target.value;
+    setData((data) => ({ ...data, [name]: value }));
+  };
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const res = await login(data);
+      console.log(res);
+
+      if (res.status === 200) {
+        toast.success("Login Successful");
+        localStorage.setItem("token", res.data.token);
+        localStorage.setItem("role", res.data.role);
+        setAuthData(res.data);
+        navigate("/dashboard");
+      }
+    } catch (error) {
+      toast.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className='bg-light d-flex align-items-cente justify-content-center vh-100 login-background'>
       <div className='card shadow-lg w-100' style={{ maxWidth: "480px" }}>
@@ -13,7 +52,7 @@ const Login = () => {
             </p>
           </div>
           <div className='mt-4'>
-            <form>
+            <form onSubmit={onSubmitHandler}>
               <div className='mb-4'>
                 <label htmlFor='email' className='form-label text-mutes'>
                   Email Address
@@ -24,11 +63,13 @@ const Login = () => {
                   id='email'
                   placeholder='yourname@example.com'
                   className='form-control'
+                  onChange={onChangeHandler}
+                  value={data.email}
                 />
               </div>
               <div className='mb-4'>
                 <label htmlFor='password' className='form-label text-mutes'>
-                  Email Address
+                  Password
                 </label>
                 <input
                   type='password'
@@ -36,6 +77,8 @@ const Login = () => {
                   id='password'
                   placeholder='*************'
                   className='form-control'
+                  onChange={onChangeHandler}
+                  value={data.password}
                 />
               </div>
               <div className='d-grid'>
