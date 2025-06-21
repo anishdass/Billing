@@ -15,9 +15,7 @@ const CategoryForm = () => {
     bgColor: "#2c2c2c",
   });
 
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
+  useEffect(() => {}, [data]);
 
   const onChangeHandler = (e) => {
     const value = e.target.value;
