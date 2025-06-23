@@ -25,6 +25,7 @@ const ItemForm = () => {
     e.preventDefault();
     if (!image) {
       toast.error("Select image");
+      return;
     }
     setLoading(true);
     const formData = new FormData();
@@ -44,7 +45,7 @@ const ItemForm = () => {
           price: "",
           description: "",
         });
-        setLoading(false);
+        setImage(false);
       } else {
         toast.error("Unable to add item");
         console.error(res);
@@ -142,6 +143,8 @@ const ItemForm = () => {
                     id='description'
                     className='form-control'
                     placeholder='Write Content here'
+                    onChange={onChangeHandler}
+                    value={data.description}
                   />
                 </div>
                 <button

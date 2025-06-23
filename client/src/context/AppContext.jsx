@@ -14,6 +14,7 @@ export const AppContextProvider = ({ children }) => {
       try {
         const categoryResponse = await fetchCategories();
         const itemResponse = await fetchItems();
+
         setCategories(categoryResponse.data);
         setItems(itemResponse.data);
       } catch (error) {
