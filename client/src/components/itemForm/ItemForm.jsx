@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import { addItem } from "../../service/ItemService";
 
 const ItemForm = () => {
-  const { categories, items, setItems } = useContext(AppContext);
+  const { categories, items, setItems, setCategories } = useContext(AppContext);
   const [image, setImage] = useState(false);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState({
@@ -37,7 +37,13 @@ const ItemForm = () => {
 
       if (res.status == 201) {
         setItems([...items, res.data]);
-        // ToDo: Updated category state
+        setCategories((prevCategories) =>
+          prevCategories.map((category) =>
+            category.categoryId === data.categoryId
+              ? { ...category, items: category.items + 1 }
+              : category
+          )
+        );
         toast.success("Item added");
         setData({
           name: "",

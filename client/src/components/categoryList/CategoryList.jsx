@@ -12,6 +12,8 @@ const CategoryList = () => {
     return category.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
+  console.log(filterCategories);
+
   const deleteByCategoryId = async (categoryId) => {
     try {
       const response = await deleteCategory(categoryId);

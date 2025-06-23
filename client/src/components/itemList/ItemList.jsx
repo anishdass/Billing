@@ -11,8 +11,6 @@ const ItemList = () => {
     return item.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
 
-  console.log(filteredItems);
-
   const deleteByItemId = async (id) => {
     try {
       const res = await deleteItem(id);

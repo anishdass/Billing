@@ -1,8 +1,19 @@
-import React from "react";
+import React, { useContext } from "react";
 import "./Menubar.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { assets } from "../../assets/assets";
+import { AppContext } from "../../context/AppContext";
 
 const Menubar = () => {
+  const { setAuthData } = useContext(AppContext);
+  const navigate = useNavigate();
+  const logout = () => {
+    localStorage.removeItem("token");
+    localStorage.removeItem("role");
+    setAuthData({ token: null, role: null });
+    navigate("/login");
+  };
+
   return (
     <nav className='navbar navbar-expand-lg navbar-dark bg-dark px-2'>
       <a className='navbar-brand' href='#'>
@@ -54,7 +65,41 @@ const Menubar = () => {
             </Link>
           </li>
         </ul>
-        {/* Add dropdown for user profile */}
+        <ul className='navbar-nav ms-auto ms-md-0 me-3 me-lg-4'>
+          <li className='nav-item dropdown'>
+            <a
+              className='nav-link dropdown-toggle'
+              href='#'
+              id='navbarDropdown'
+              role='button'
+              data-bs-toggle='dropdown'
+              aria-expanded='false'>
+              <img src={assets.profile} alt='Profile' height={32} width={32} />
+            </a>
+            <ul
+              className='dropdown-menu dropdown-menu-end'
+              aria-labelledby='navbarDropdown'>
+              <li>
+                <a href='#' className='dropdown-item'>
+                  Settings
+                </a>
+              </li>
+              <li>
+                <a href='#' className='dropdown-item'>
+                  Activity Log
+                </a>
+              </li>
+              <li>
+                <hr className='dropdown-divider' />
+              </li>
+              <li>
+                <a href='#' className='dropdown-item' onClick={logout}>
+                  Logout
+                </a>
+              </li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </nav>
   );
