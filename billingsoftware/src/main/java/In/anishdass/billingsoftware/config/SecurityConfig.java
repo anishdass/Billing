@@ -33,11 +33,31 @@ public class SecurityConfig {
     private final AppUserDetailsService appUserDetailsService;
     private final JWTRequestFilter jwtRequestFilter;
 
+    /**
+     * Retrieves and returns the AuthenticationManager from the provided AuthenticationConfiguration.
+     * This method is typically used to expose the AuthenticationManager as a Spring bean
+     * for manual authentication in controllers or custom security filters.
+     *
+     * @param config the Spring-provided AuthenticationConfiguration object
+     * @return the configured AuthenticationManager used to authenticate users
+     * @throws Exception if the AuthenticationManager cannot be retrieved
+     */
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
+    /**
+     * Configures the application's HTTP security filter chain using Spring Security.
+     * - Enables CORS and disables CSRF (suitable for stateless APIs)
+     * - Defines authorization rules based on URL patterns and user roles
+     * - Sets session policy to stateless for JWT-based authentication
+     * - Adds a custom JWT filter before Spring's default authentication filter
+     *
+     * @param httpSecurity the HttpSecurity object used to configure security settings
+     * @return the configured SecurityFilterChain
+     * @throws Exception if there is an error during security configuration
+     */
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity.cors(Customizer.withDefaults())

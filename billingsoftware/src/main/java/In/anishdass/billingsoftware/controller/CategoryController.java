@@ -21,7 +21,8 @@ public class CategoryController {
 
     @PostMapping("/admin/categories")
     @ResponseStatus(HttpStatus.CREATED)
-    public CategoryResponse addCategory(@RequestPart("category") String categoryString, @RequestPart("file") MultipartFile file) {
+    public CategoryResponse addCategory(@RequestPart("category") String categoryString,
+                                        @RequestPart("file") MultipartFile file) {
         ObjectMapper objectMapper = new ObjectMapper();
         CategoryRequest request = null;
         try {
@@ -40,7 +41,7 @@ public class CategoryController {
 
     @ResponseStatus(HttpStatus.NO_CONTENT)
     @DeleteMapping("/admin/categories/{categoryId}")
-    public void remove(@PathVariable String categoryId) {
+    public void removeCategory(@PathVariable String categoryId) {
         try {
             categoryService.delete(categoryId);
         } catch (Exception e) {

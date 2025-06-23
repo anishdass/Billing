@@ -25,7 +25,6 @@ const Login = () => {
     setLoading(true);
     try {
       const res = await login(data);
-      console.log(res);
 
       if (res.status === 200) {
         toast.success("Login Successful");

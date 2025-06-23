@@ -24,10 +24,9 @@ const UserForm = ({ setUsers }) => {
     setLoading(true);
     try {
       const res = await addUser(data);
-      console.log(res);
-      // setUsers((prevUsers) => [...prevUsers, res.data]);
-      // toast.success("User Added");
-      // setData({ name: "", email: "", password: "", role: "ROLE_USER" });
+      setUsers((prevUsers) => [...prevUsers, res.data]);
+      toast.success("User Added");
+      setData({ name: "", email: "", password: "", role: "ROLE_USER" });
     } catch (e) {
       toast.error("Error Adding user");
       console.error(e.message);
@@ -39,7 +38,7 @@ const UserForm = ({ setUsers }) => {
   return (
     <div className='mx-2 mt-2'>
       <div className='row'>
-        <div className='card col-md-8 form-container'>
+        <div className='card col-md-12 form-container'>
           <div className='card-body'>
             <form onSubmit={onSubmitHandler}>
               <div className='mb-3'>
