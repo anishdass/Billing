@@ -35,6 +35,7 @@ const CategoryForm = () => {
     const formData = new FormData();
     formData.append("category", JSON.stringify(data));
     formData.append("file", image);
+
     try {
       const res = await addCategory(formData);
       if (res.status === 201) {

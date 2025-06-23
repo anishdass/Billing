@@ -1,6 +1,62 @@
-import React from "react";
+import React, { useContext, useState } from "react";
+import { assets } from "../../assets/assets";
+import { AppContext } from "../../context/AppContext";
+import toast from "react-hot-toast";
+import { addItem } from "../../service/ItemService";
 
 const ItemForm = () => {
+  const { categories, items, setItems } = useContext(AppContext);
+  const [image, setImage] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [data, setData] = useState({
+    name: "",
+    description: "",
+    price: "",
+    categoryId: "",
+  });
+
+  const onChangeHandler = (e) => {
+    const value = e.target.value;
+    const name = e.target.name;
+    setData((data) => ({ ...data, [name]: value }));
+  };
+
+  const onSubmitHandler = async (e) => {
+    e.preventDefault();
+    if (!image) {
+      toast.error("Select image");
+    }
+    setLoading(true);
+    const formData = new FormData();
+    formData.append("item", JSON.stringify(data));
+    formData.append("file", image);
+    try {
+      const res = await addItem(formData);
+      console.log(res);
+
+      if (res.status == 201) {
+        setItems([...items, res.data]);
+        // ToDo: Updated category state
+        toast.success("Item added");
+        setData({
+          name: "",
+          categoryId: "",
+          price: "",
+          description: "",
+        });
+        setLoading(false);
+      } else {
+        toast.error("Unable to add item");
+        console.error(res);
+      }
+    } catch (error) {
+      toast.error("Unable to add item");
+      console.error(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div
       className='item-form-container'
@@ -9,11 +65,11 @@ const ItemForm = () => {
         <div className='row'>
           <div className='card col-md-8 form-container'>
             <div className='card-body'>
-              <form>
+              <form onSubmit={onSubmitHandler}>
                 <div className='mb-3'>
                   <label htmlFor='image' className='form-label'>
                     <img
-                      src='https://placehold.co/48x48/png'
+                      src={image ? URL.createObjectURL(image) : assets.upload}
                       alt=''
                       width={48}
                     />
@@ -23,9 +79,11 @@ const ItemForm = () => {
                     name='image'
                     id='image'
                     className='form-control'
+                    onChange={(e) => setImage(e.target.files[0])}
                     hidden
                   />
                 </div>
+
                 <div className='mb-3'>
                   <label htmlFor='name' className='form-label'>
                     Name
@@ -35,22 +93,30 @@ const ItemForm = () => {
                     name='name'
                     id='name'
                     className='form-control'
+                    onChange={onChangeHandler}
+                    value={data.name}
                     placeholder='Item Name'
                   />
                 </div>
+
                 <div className='mb-3'>
-                  <label htmlFor='category' className='form-balem'>
+                  <label htmlFor='category' className='form-label'>
                     Category
                   </label>
                   <select
-                    name='category'
+                    name='categoryId'
                     id='category'
-                    className='form-control'>
+                    className='form-control'
+                    onChange={onChangeHandler}>
                     <option value=''>Select Category</option>
-                    <option value='category1'>Category 1</option>
-                    <option value='category2'>Category 2</option>
+                    {categories.map((category, index) => (
+                      <option key={index} value={category.categoryId}>
+                        {category.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
+
                 <div className='mb-3'>
                   <label htmlFor='price' className='form-label'>
                     Price
@@ -60,9 +126,12 @@ const ItemForm = () => {
                     name='price'
                     id='price'
                     className='form-control'
+                    onChange={onChangeHandler}
+                    value={data.price}
                     placeholder='&#163;1'
                   />
                 </div>
+
                 <div className='mb-3'>
                   <label htmlFor='description' className='form-label'>
                     Description
@@ -75,8 +144,11 @@ const ItemForm = () => {
                     placeholder='Write Content here'
                   />
                 </div>
-                <button type='submit' className='btn btn-primary w-100'>
-                  Save
+                <button
+                  type='submit'
+                  className='btn btn-primary w-100'
+                  disabled={loading}>
+                  {loading ? "Loading..." : "Save"}
                 </button>
               </form>
             </div>
