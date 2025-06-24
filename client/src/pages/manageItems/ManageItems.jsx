@@ -1,7 +1,7 @@
 import React from "react";
 import "./ManageItems.css";
-import ItemForm from "../../components/itemForm/ItemForm";
-import ItemList from "../../components/itemList/ItemList";
+import ItemForm from "../../components/ManageItems/ItemForm/ItemForm";
+import ItemList from "../../components/ManageItems/ItemList/ItemList";
 
 const ManageItems = () => {
   return (

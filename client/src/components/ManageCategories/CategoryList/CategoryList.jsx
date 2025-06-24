@@ -1,7 +1,7 @@
 import "./CategoryList.css";
 import React, { useContext, useState } from "react";
-import { AppContext } from "../../context/AppContext";
-import { deleteCategory } from "../../service/CategoryService";
+import { AppContext } from "../../../context/AppContext";
+import { deleteCategory } from "../../../service/CategoryService";
 import toast from "react-hot-toast";
 
 const CategoryList = () => {
@@ -11,8 +11,6 @@ const CategoryList = () => {
   const filterCategories = categories.filter((category) => {
     return category.name.toLowerCase().includes(searchTerm.toLowerCase());
   });
-
-  console.log(filterCategories);
 
   const deleteByCategoryId = async (categoryId) => {
     try {

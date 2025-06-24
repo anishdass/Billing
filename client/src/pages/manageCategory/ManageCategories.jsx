@@ -1,7 +1,7 @@
 import React from "react";
 import "./ManageCategories.css";
-import CategoryForm from "../../components/categoryForm/CategoryForm";
-import CategoryList from "../../components/categoryList/CategoryList";
+import CategoryForm from "../../components/ManageCategories/CategoryForm/CategoryForm";
+import CategoryList from "../../components/ManageCategories/CategoryList/CategoryList";
 
 const ManageCategories = () => {
   return (
