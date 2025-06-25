@@ -11,7 +11,7 @@ const Category = ({
 }) => {
   return (
     <div
-      className='d-flex align-items-center p-3 rounded gap-1 position-relative category-ondragover'
+      className='d-flex align-items-center p-3 rounded gap-1 position-relative category-hover'
       style={{ backgroundColor: bgColor, cursor: "pointer" }}
       onClick={onClick}>
       <div style={{ position: "relative", marginRight: "15px" }}>

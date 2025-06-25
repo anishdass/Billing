@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./ManageUsers.css";
-import UserForm from "../../components/userForm/UserForm";
-import UserList from "../../components/userList/UserList";
+import UserForm from "../../components/ManageUsers/UserForm/UserForm";
+import UserList from "../../components/ManageUsers/UserList/UserList";
 import toast from "react-hot-toast";
 import { fetchUsers } from "../../service/UserService";
 
