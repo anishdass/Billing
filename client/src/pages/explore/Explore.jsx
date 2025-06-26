@@ -9,7 +9,7 @@ import CartItems from "../../components/Explore/CartItems/CartItems";
 
 const Explore = () => {
   const { categories } = useContext(AppContext);
-  const [selectedCategory, setSelecteCategory] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
 
   return (
     <div className='explore-container text-light'>
@@ -17,13 +17,13 @@ const Explore = () => {
         <div className='first-row' style={{ overflowY: "auto" }}>
           <Categories
             selectedCategory={selectedCategory}
-            setSelecteCategory={setSelecteCategory}
+            setSelectedCategory={setSelectedCategory}
             categories={categories}
           />
         </div>
         <hr className='horizontal-line' />
         <div className='second-row' style={{ overflowY: "auto" }}>
-          <Items />
+          <Items selectedCategory={selectedCategory} />
         </div>
       </div>
       <div className='right-column d-flex flex-column'>

@@ -8,6 +8,24 @@ export const AppContextProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
   const [items, setItems] = useState([]);
   const [auth, setAuth] = useState({ token: null, role: null });
+  const [cartItems, setCartItems] = useState([]);
+
+  const addToCart = (item) => {
+    const existingItem = cartItems.find(
+      (cartItem) => cartItem.name === item.name
+    );
+    if (existingItem) {
+      setCartItems(
+        cartItems.map((cartItem) =>
+          cartItem.name === item.name
+            ? { ...cartItem, quantity: cartItem.quantity + 1 }
+            : cartItem
+        )
+      );
+    } else {
+      setCartItems([...cartItems, { ...item, quantity: 1 }]);
+    }
+  };
 
   useEffect(() => {
     const loadData = async () => {
@@ -41,6 +59,8 @@ export const AppContextProvider = ({ children }) => {
     setItems,
     setAuthData,
     auth,
+    addToCart,
+    cartItems,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

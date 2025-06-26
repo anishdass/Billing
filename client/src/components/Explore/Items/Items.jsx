@@ -4,15 +4,21 @@ import { AppContext } from "../../../context/AppContext";
 import Item from "../../Item/Item";
 import SearchBox from "../../ManageItems/SearchBox/SearchBox";
 
-const Items = () => {
+const Items = ({ selectedCategory }) => {
   const { items } = useContext(AppContext);
   const [searchText, setSearchText] = useState("");
 
-  const filteredItems = items.filter((item) =>
-    item.name.toLowerCase().includes(searchText.toLowerCase())
-  );
+  const filteredItems = items
+    // Category filter
+    .filter((item) => !selectedCategory || item.categoryId === selectedCategory)
+    // Search term filter
+    .filter((item) =>
+      item.name.toLowerCase().includes(searchText.toLowerCase())
+    );
 
-  console.log(items[0]);
+  console.log(selectedCategory);
+  console.log(items[1]);
+
   return (
     <div className='p-3'>
       <div className='d-flex justify-content-between align-items-center mb-4'>

@@ -2,7 +2,7 @@ import React from "react";
 import "./Categories.css";
 import Category from "../../Category/Category";
 
-const Categories = ({ categories, selectedCategory, setSelecteCategory }) => {
+const Categories = ({ categories, selectedCategory, setSelectedCategory }) => {
   return (
     <div className='row gap-3' style={{ width: "100%", margin: "0" }}>
       {categories.map((category) => (
@@ -16,7 +16,13 @@ const Categories = ({ categories, selectedCategory, setSelecteCategory }) => {
             itemsCount={category.items}
             bgColor={category.bgColor}
             isSelected={selectedCategory === category.categoryId}
-            onClick={() => setSelecteCategory(category.categoryId)}
+            onClick={() =>
+              setSelectedCategory(
+                selectedCategory === category.categoryId
+                  ? null
+                  : category.categoryId
+              )
+            }
           />
         </div>
       ))}
