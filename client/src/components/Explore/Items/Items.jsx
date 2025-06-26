@@ -16,9 +16,6 @@ const Items = ({ selectedCategory }) => {
       item.name.toLowerCase().includes(searchText.toLowerCase())
     );
 
-  console.log(selectedCategory);
-  console.log(items[1]);
-
   return (
     <div className='p-3'>
       <div className='d-flex justify-content-between align-items-center mb-4'>
