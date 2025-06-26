@@ -27,6 +27,18 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
+  const deleteFromCart = (itemId) => {
+    setCartItems(cartItems.filter((item) => item.itemId !== itemId));
+  };
+
+  const updateQuantity = (itemId, newQuantity) => {
+    setCartItems(
+      cartItems.map((item) =>
+        item.itemId === itemId ? { ...item, quantity: newQuantity } : item
+      )
+    );
+  };
+
   useEffect(() => {
     const loadData = async () => {
       try {
@@ -61,6 +73,8 @@ export const AppContextProvider = ({ children }) => {
     auth,
     addToCart,
     cartItems,
+    deleteFromCart,
+    updateQuantity,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
