@@ -10,6 +10,8 @@ import CartItems from "../../components/Explore/CartItems/CartItems";
 const Explore = () => {
   const { categories } = useContext(AppContext);
   const [selectedCategory, setSelectedCategory] = useState("");
+  const [customerName, setCustomerName] = useState("");
+  const [mobileNumber, setMobileNumber] = useState("");
 
   return (
     <div className='explore-container text-light'>
@@ -28,7 +30,12 @@ const Explore = () => {
       </div>
       <div className='right-column d-flex flex-column'>
         <div className='customer-form-container' style={{ height: "15%" }}>
-          <CustomerForm />
+          <CustomerForm
+            customerName={customerName}
+            setCustomerName={setCustomerName}
+            mobileNumber={mobileNumber}
+            setMobileNumber={setMobileNumber}
+          />
         </div>
         <hr className='my-3 text-light' />
         <div
@@ -37,7 +44,12 @@ const Explore = () => {
           <CartItems />
         </div>
         <div className='cart-summary-container' style={{ height: "30%" }}>
-          <CartSummary />
+          <CartSummary
+            customerName={customerName}
+            setCustomerName={setCustomerName}
+            mobileNumber={mobileNumber}
+            setMobileNumber={setMobileNumber}
+          />
         </div>
       </div>
     </div>

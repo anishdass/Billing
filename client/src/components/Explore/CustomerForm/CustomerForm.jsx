@@ -1,10 +1,11 @@
-import React, { useState } from "react";
 import "./CustomerForm.css";
 
-const CustomerForm = () => {
-  const [customerName, setCustomerName] = useState("");
-  const [mobileNumber, setMobileNumber] = useState("");
-
+const CustomerForm = ({
+  customerName,
+  setCustomerName,
+  mobileNumber,
+  setMobileNumber,
+}) => {
   return (
     <div className='p-3'>
       <div className='mb-3'>
