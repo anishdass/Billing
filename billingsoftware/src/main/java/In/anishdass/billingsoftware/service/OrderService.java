@@ -10,5 +10,5 @@ public interface OrderService {
 
     void deleteOrder(String orderId);
 
-    List<OrderResponse> getLatestOrders(String orderId);
+    List<OrderResponse> getLatestOrders();
 }

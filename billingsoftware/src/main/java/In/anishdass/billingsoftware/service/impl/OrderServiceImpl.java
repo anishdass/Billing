@@ -83,11 +83,16 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void deleteOrder(String orderId) {
-
+        OrderEntity currentOrder = orderEntityRepository.findByOrderId(orderId)
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        orderEntityRepository.delete(currentOrder);
     }
 
     @Override
-    public List<OrderResponse> getLatestOrders(String orderId) {
-        return List.of();
+    public List<OrderResponse> getLatestOrders() {
+        return orderEntityRepository.findAllByOrderByCreatedAtDesc()
+                .stream()
+                .map(this::convertToResponse)
+                .collect(Collectors.toList());
     }
 }
