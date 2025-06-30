@@ -10,24 +10,23 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/orders")
 @RequiredArgsConstructor
 public class OrderController {
     private final OrderService orderService;
 
-    @PostMapping
+    @PostMapping("/admin/orders")
     @ResponseStatus(HttpStatus.CREATED)
     public OrderResponse createOrder(@RequestBody OrderRequest request) {
         return orderService.createOrder(request);
     }
 
-    @DeleteMapping("/{orderId}")
+    @DeleteMapping("/admin/orders/{orderId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOrder(@PathVariable String orderId) {
         orderService.deleteOrder((orderId));
     }
 
-    @GetMapping("/latest")
+    @GetMapping("/orders")
     public List<OrderResponse> getLatestOrders() {
         return orderService.getLatestOrders();
     }
