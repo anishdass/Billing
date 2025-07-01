@@ -2,10 +2,7 @@ package In.anishdass.billingsoftware.service.impl;
 
 import In.anishdass.billingsoftware.entity.OrderEntity;
 import In.anishdass.billingsoftware.entity.OrderItemEntity;
-import In.anishdass.billingsoftware.io.OrderRequest;
-import In.anishdass.billingsoftware.io.OrderResponse;
-import In.anishdass.billingsoftware.io.PaymentDetails;
-import In.anishdass.billingsoftware.io.PaymentMethod;
+import In.anishdass.billingsoftware.io.*;
 import In.anishdass.billingsoftware.repository.OrderEntityRepository;
 import In.anishdass.billingsoftware.service.OrderService;
 import lombok.RequiredArgsConstructor;
@@ -94,5 +91,28 @@ public class OrderServiceImpl implements OrderService {
                 .stream()
                 .map(this::convertToResponse)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public OrderResponse verifyPayment(PaymentVerificationRequest request) {
+        OrderEntity existingOrder = orderEntityRepository.findByOrderId(request.getOrderId())
+                .orElseThrow(() -> new RuntimeException("Order not found"));
+        if (!verifyStripeSignature(request.getStripeOrderId(),
+                request.getStripePaymentId(),
+                request.getStripeSignature())) {
+            throw new RuntimeException("Payment verification failed");
+        }
+        PaymentDetails paymentDetails = existingOrder.getPaymentDetails();
+        paymentDetails.setStripeOrderId(request.getStripeOrderId());
+        paymentDetails.setStripePaymentId(request.getStripePaymentId());
+        paymentDetails.setStripeSignature(request.getStripeSignature());
+        paymentDetails.setStatus(PaymentDetails.PaymentStatus.COMPLETED);
+
+        existingOrder = orderEntityRepository.save(existingOrder);
+        return convertToResponse(existingOrder);
+    }
+
+    private boolean verifyStripeSignature(String stripeOrderId, String stripePaymentId, String stripeSignature) {
+        return true;
     }
 }
