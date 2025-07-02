@@ -2,12 +2,7 @@ import React, { useContext } from "react";
 import "./CartSummary.css";
 import { AppContext } from "../../../context/AppContext";
 
-const CartSummary = ({
-  customerName,
-  setCustomerName,
-  mobileNumber,
-  setMobileNumber,
-}) => {
+const CartSummary = () => {
   const { cartItems } = useContext(AppContext);
   const totalAmount = cartItems.reduce(
     (total, item) => total + item.price * item.quantity,
