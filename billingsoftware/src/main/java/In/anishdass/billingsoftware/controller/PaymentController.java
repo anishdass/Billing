@@ -20,15 +20,14 @@ public class PaymentController {
     private final StripeService stripeService;
     private final OrderService orderService;
 
-    @PostMapping("/admin/create-payment-order")
+    @PostMapping("/create-payment-order")
     @ResponseStatus(HttpStatus.CREATED)
     public StripeOrderResponse createStripeOrder(@RequestBody PaymentRequest request) throws StripeException {
         return stripeService.createOrder(request.getAmount(), request.getCurrency());
     }
 
-    @PostMapping("/admin/verify")
+    @PostMapping("/verify")
     public OrderResponse verifyPayment(@RequestBody PaymentVerificationRequest request) {
         return orderService.verifyPayment(request);
-
     }
 }

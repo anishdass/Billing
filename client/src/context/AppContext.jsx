@@ -27,6 +27,10 @@ export const AppContextProvider = ({ children }) => {
     }
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+  };
+
   const deleteFromCart = (itemId) => {
     setCartItems(cartItems.filter((item) => item.itemId !== itemId));
   };
@@ -75,6 +79,7 @@ export const AppContextProvider = ({ children }) => {
     cartItems,
     deleteFromCart,
     updateQuantity,
+    clearCart,
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

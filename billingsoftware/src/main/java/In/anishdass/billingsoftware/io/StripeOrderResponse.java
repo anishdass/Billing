@@ -13,6 +13,7 @@ import java.util.Date;
 @Builder
 public class StripeOrderResponse {
     private String id;
+    private String clientSecret;
     private String entity;
     private Integer amount;
     private String currency;
@@ -21,6 +22,6 @@ public class StripeOrderResponse {
     private String receipt;
 
     public StripeOrderResponse(String secretKey, String publishableKey) {
-        
+
     }
 }

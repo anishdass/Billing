@@ -21,7 +21,7 @@ import java.util.List;
 public class OrderEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
     private String orderId;
     private String customerName;
     private String phoneNumber;

@@ -39,6 +39,7 @@ public class StripeServiceImpl implements StripeService {
     private StripeOrderResponse convertToStripeResponse(PaymentIntent intent) {
         return StripeOrderResponse.builder()
                 .id(intent.getId())
+                .clientSecret(intent.getClientSecret())
                 .entity("payment_intent")
                 .amount(intent.getAmount().intValue())
                 .currency(intent.getCurrency())

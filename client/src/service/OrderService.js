@@ -25,4 +25,4 @@ const deleteOrder = async (orderId) => {
   );
 };
 
-export default { getOrders, createOrder, deleteOrder };
+export { getOrders, createOrder, deleteOrder };

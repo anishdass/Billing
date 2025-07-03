@@ -1,8 +1,10 @@
 import axios from "axios";
 
-const createStripeOrder = async () => {
+const createStripeOrder = async (orderData) => {
   return await axios.post(
-    "http://localhost:8080/api/v1.0/admin/create-payment-order",
+    "http://localhost:8080/api/v1.0/create-payment-order",
+    orderData,
+
     {
       headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
     }
@@ -19,4 +21,4 @@ const verifyPayment = async (verificationData) => {
   );
 };
 
-export default { createStripeOrder, verifyPayment };
+export { createStripeOrder, verifyPayment };

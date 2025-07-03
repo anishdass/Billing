@@ -103,9 +103,11 @@ public class OrderServiceImpl implements OrderService {
             throw new RuntimeException("Payment verification failed");
         }
         PaymentDetails paymentDetails = existingOrder.getPaymentDetails();
+
         paymentDetails.setStripeOrderId(request.getStripeOrderId());
         paymentDetails.setStripePaymentId(request.getStripePaymentId());
         paymentDetails.setStripeSignature(request.getStripeSignature());
+
         paymentDetails.setStatus(PaymentDetails.PaymentStatus.COMPLETED);
 
         existingOrder = orderEntityRepository.save(existingOrder);
