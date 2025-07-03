@@ -139,17 +139,19 @@ const CartSummary = ({
           currency: "INR",
         });
 
-        const stripe = window.Stripe(AppConstants.STRIPE_PUBLISHABLE_KEY);
+        console.log(import.meta.env.VITE_STRIPE_PUBLISHABLE_KEY);
 
-        // Confirm card payment with Stripe (using client secret)
-        const { error, paymentIntent } = await stripe.confirmCardPayment(
-          stripeOrderResponse.data.clientSecret,
-          {
-            payment_method: {},
-          }
-        );
+        // const stripe = window.Stripe(process.env.STRIPE_PUBLISHABLE_KEY);
 
-        console.log(paymentIntent);
+        // // Confirm card payment with Stripe (using client secret)
+        // const { error, paymentIntent } = await stripe.confirmCardPayment(
+        //   stripeOrderResponse.data.clientSecret,
+        //   {
+        //     payment_method: {},
+        //   }
+        // );
+
+        // console.log(paymentIntent);
 
         //   if (error) {
         //     toast.error(error.message || "Payment failed");
